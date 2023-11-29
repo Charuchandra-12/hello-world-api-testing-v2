@@ -28,10 +28,11 @@ jobs:
         #   node-version: ${{ matrix.node-version }}
         #   cache: "npm"
       # - run: npm ci
+      # Install Node.js dependencies
       - run: npm install
+      # Install Playwright dependencies
       - run: npx playwright install
+      # Start Node.js server
       - run: npm start
+      # Run tests
       - run: npm test
-      # - run: |
-      #     result=$(npm test)
-      #     echo "$result"
