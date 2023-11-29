@@ -31,5 +31,6 @@ jobs:
       # - run: node index.js
       - run: npm install
       - run: npx playwright install
-      - run: sleep 5
+      - run: npm start &
+      # - run: sleep 5
       - run: npx playwright test
