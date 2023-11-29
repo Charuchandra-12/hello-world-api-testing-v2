@@ -28,8 +28,9 @@ jobs:
         #   node-version: ${{ matrix.node-version }}
         #   cache: "npm"
       # - run: npm ci
-      # - run: node index.js
       - run: npm install
       - run: npx playwright install
       - run: npm start
-      - run: npm test
+      - run: |
+          result=$(npm test)
+          echo "Test result: $result"
