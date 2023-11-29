@@ -30,7 +30,8 @@ jobs:
       # - run: npm ci
       # - run: node index.js
       - run: npm install
-      - run: npx playwright install
-      - run: node index.js &
-      # - run: sleep 10
-      - run: npx playwright test
+      # - run: npx playwright install
+      # - run: node index.js &
+      # - run: npx playwright test
+      - run: npm start
+      - run: npm test

@@ -4,7 +4,8 @@
   "description": "Writing the Hello-world API and integrating the API for testing, using the playwright and GitHub actions",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node index.js",
+    "test": "npx playwright test"
   },
   "keywords": [],
   "author": "Chinmay Kubal",
