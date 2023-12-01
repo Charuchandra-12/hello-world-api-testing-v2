@@ -25,7 +25,9 @@ jobs:
       - name: Install AWS CLI
         run: |
           sudo apt-get install -y awscli
-
+      # Start Node.js server
+      - name: Start Node.js server
+        run: npm start
       # Run Playwright Tests
       - name: Run Playwright Tests
         run: npm test
