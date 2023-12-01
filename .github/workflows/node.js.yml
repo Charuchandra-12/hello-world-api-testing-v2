@@ -18,24 +18,32 @@ jobs:
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
 
-      - run: npm install
-      - run: npx playwright install
+      - name: Install Node.js dependencies
+        run: npm install
 
-      # Install AWS CLI
+      - name: Install Playwright dependencies
+        run: npx playwright install
+
       - name: Install AWS CLI
         run: |
           sudo apt-get install -y awscli
-      # Start Node.js server
-      - name: Start Node.js server
-        run: npm start
-      # Run Playwright Tests
-      - name: Run Playwright Tests
-        run: npm test
 
-      # Upload test-results.json to S3
-      - name: Upload test-results.json to S3
+      - name: Configure AWS
         run: |
-          aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json s3://hello-world-api-test-reports/test_reports/
+          aws configure set aws_access_key_id $AWS_ACCESS_KEY_ID
+          aws configure set aws_secret_access_key $AWS_SECRET_ACCESS_KEY
+          aws configure set default.region us-east-1  
+          aws configure set default.output json
         env:
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+
+      - name: Start Node.js server
+        run: npm start
+
+      - name: Run Playwright Tests
+        run: npm test
+
+      - name: Upload test-results.json to S3
+        run: |
+          aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json s3://hello-world-api-test-reports/test_reports/
