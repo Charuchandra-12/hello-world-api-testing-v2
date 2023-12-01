@@ -42,7 +42,7 @@ jobs:
         run: npm start
 
       - name: Run Playwright Tests
-        run: npm test echo
+        run: npm test
 
       - name: Upload test-results.json to S3
         run: |
