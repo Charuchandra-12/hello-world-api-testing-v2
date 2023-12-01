@@ -1,5 +1,5 @@
 {
-  "name": "pt-new-tasks-3-V2",
+  "name": "hello-world-api-testing",
   "version": "1.0.0",
   "description": "Writing the Hello-world API and integrating the API for testing, using the playwright and GitHub actions",
   "main": "index.js",
@@ -11,8 +11,10 @@
   "author": "Chinmay Kubal",
   "license": "ISC",
   "dependencies": {
+    "express": "^4.18.2"
+  },
+  "devDependencies": {
     "@playwright/test": "^1.40.1",
-    "express": "^4.18.2",
     "playwright": "^1.40.1"
   }
 }

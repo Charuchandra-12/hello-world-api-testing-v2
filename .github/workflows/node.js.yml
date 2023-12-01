@@ -1,38 +1,38 @@
-# This workflow will do a clean installation of node dependencies, cache/restore them, build the source code and run tests across different versions of node
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-nodejs
-
 name: Hello World API Testing
 
 on:
   push:
     branches: ["main"]
-  # pull_request:
-  #   branches: [ "main" ]
 
 jobs:
-  build:
+  test:
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        # node-version: [14.x, 16.x, 18.x]
         node-version: [20.10.0]
-
-        # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
       - uses: actions/checkout@v3
+
       - name: Use Node.js ${{ matrix.node-version }}
         uses: actions/setup-node@v3
-        # with:
-        #   node-version: ${{ matrix.node-version }}
-        #   cache: "npm"
-      # - run: npm ci
-      # Install Node.js dependencies
+
       - run: npm install
-      # Install Playwright dependencies
-      - run: npx playwright install
-      # Start Node.js server
-      - run: npm start
-      # Run tests
-      - run: npm test
+
+      # Install AWS CLI
+      - name: Install AWS CLI
+        run: |
+          sudo apt-get install -y awscli
+
+      # Run Playwright Tests
+      - name: Run Playwright Tests
+        run: npm test
+
+      # Upload test-results.json to S3
+      - name: Upload test-results.json to S3
+        run: |
+          aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json s3://hello-world-api-test-reports/test_reports/
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
