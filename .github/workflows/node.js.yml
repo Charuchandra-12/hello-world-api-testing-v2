@@ -7,8 +7,6 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    env:
-      REPORTS_URL: ${{ secrets.REPORTS_URL }}
     strategy:
       matrix:
         node-version: [20.10.0]
