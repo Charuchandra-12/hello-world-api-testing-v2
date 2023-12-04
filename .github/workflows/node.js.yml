@@ -46,3 +46,8 @@ jobs:
       - name: Upload test-results.json to S3
         run: |
           aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json s3://hello-world-api-reports/hello_world_api_test_reports/
+
+      - name: Get the public URL of S3 Bucket
+        run: |
+          object_url="http://hello-world-api-reports.s3-website-us-east-1.amazonaws.com/hello_world_api_test_reports/test-results.json"
+          echo "Public Object URL: $object_url"
