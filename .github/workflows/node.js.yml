@@ -7,6 +7,8 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
+    env:
+      REPORTS_URL: ${{ secrets.REPORTS_URL }}
     strategy:
       matrix:
         node-version: [20.10.0]
@@ -48,4 +50,4 @@ jobs:
           aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json s3://hello-world-api-reports/hello_world_api_test_reports/
 
       - name: Get the public URL of S3 Bucket
-        run: echo ${{env.HELLO_WORLD_API_REPORTS_BUCKET_URL}}
+        run: echo "${{env.REPORTS_URL}}"
