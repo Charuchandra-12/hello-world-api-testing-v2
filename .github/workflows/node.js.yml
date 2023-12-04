@@ -23,7 +23,7 @@ jobs:
         run: npx playwright install
 
       - name: Install allure-playwright
-        run: npm install allure-playwright --save
+        run: npm install allure-playwright
 
       - name: Install allure-commandline
         run: npm install -D allure-commandline
@@ -56,12 +56,11 @@ jobs:
         run: |
           aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.ALLURE_REPORT_LOCATION}} --recursive
 
-      # - name: Upload test-results.json to S3 for JSON Reports
-      #   run: |
-      #     aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json ${{vars.BUCKET_URL}}
-
-      # - name: Get the public URL of S3 Bucket for JSON Reports
-      #   run: echo "${{vars.REPORTS_URL}}"
-
       - name: Get the public URL of S3 Bucket for ALLURE Report
         run: echo "${{vars.ALLURE_REPORT_URL}}"
+#     - name: Upload test-results.json to S3 for JSON Reports
+#   run: |
+#     aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json ${{vars.BUCKET_URL}}
+
+# - name: Get the public URL of S3 Bucket for JSON Reports
+#   run: echo "${{vars.REPORTS_URL}}"
