@@ -23,7 +23,7 @@ jobs:
         run: npx playwright install
 
       - name: Install allure-playwright
-        run: npm install allure-playwright
+        run: npm install allure-playwright --save
 
       - name: Install allure-commandline
         run: npm install -D allure-commandline
