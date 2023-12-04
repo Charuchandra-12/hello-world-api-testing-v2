@@ -48,4 +48,4 @@ jobs:
           aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json s3://hello-world-api-reports/hello_world_api_test_reports/
 
       - name: Get the public URL of S3 Bucket
-        run: echo "$HELLO_WORLD_API_REPORTS_BUCKET_URL"
+        run: echo "${{env.HELLO_WORLD_API_REPORTS_BUCKET_URL}}"
