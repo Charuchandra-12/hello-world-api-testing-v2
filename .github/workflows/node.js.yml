@@ -51,10 +51,7 @@ jobs:
 
       - name: Upload Allure results to S3
         run: |
-          aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.BUCKET_URL}}/allure-report/ --recursive
-
-      - name: Open Allure report
-        run: npx allure open ${{vars.BUCKET_URL}}/allure-report/ &
+          aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.BUCKET_URL}}/allure-report --recursive
 
       # - name: Upload test-results.json to S3 for JSON Reports
       #   run: |
