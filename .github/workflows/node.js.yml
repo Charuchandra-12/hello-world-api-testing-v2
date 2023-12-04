@@ -22,6 +22,9 @@ jobs:
       - name: Install Playwright dependencies
         run: npx playwright install
 
+      - name: Install allure-commandline
+        run: npm install -D allure-commandline
+
       - name: Install AWS CLI
         run: |
           sudo apt-get install -y awscli
@@ -43,9 +46,19 @@ jobs:
         run: npm test
         continue-on-error: true
 
-      - name: Upload test-results.json to S3
+      - name: Generate Allure Reports
+        run: npx allure generate $GITHUB_WORKSPACE/allure-results --clean
+
+      - name: Upload Allure results to S3
+        run: |
+          aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.BUCKET_URL}}/allure-report/ --recursive
+
+      - name: Open Allure report
+        run: npx allure open ${{vars.BUCKET_URL}}/allure-report/ &
+
+      - name: Upload test-results.json to S3 for JSON Reports
         run: |
           aws s3 cp $GITHUB_WORKSPACE/test-results/test-results.json ${{vars.BUCKET_URL}}
 
-      - name: Get the public URL of S3 Bucket
+      - name: Get the public URL of S3 Bucket for JSON Reports
         run: echo "${{vars.REPORTS_URL}}"
