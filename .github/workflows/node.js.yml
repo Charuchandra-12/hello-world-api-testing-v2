@@ -54,7 +54,7 @@ jobs:
 
       # - name: Upload Allure results to S3
       #   run: |
-      #     aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.ALLURE_REPORT_LOCATION}} --recursive
+      # aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.ALLURE_REPORT_LOCATION}} --recursive
 
       - name: Upload Allure results to S3
         run: |
