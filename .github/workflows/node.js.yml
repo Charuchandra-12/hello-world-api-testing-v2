@@ -52,9 +52,16 @@ jobs:
       - name: Generate Allure Reports
         run: npx allure generate $GITHUB_WORKSPACE/allure-results --clean
 
+      # - name: Upload Allure results to S3
+      #   run: |
+      #     aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.ALLURE_REPORT_LOCATION}} --recursive
+
       - name: Upload Allure results to S3
         run: |
-          aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.ALLURE_REPORT_LOCATION}} --recursive
+          # Use a timestamp or another unique identifier to create a separate directory
+          timestamp=$(date +"%Y%m%d%H%M%S")
+          s3_location="${{vars.ALLURE_REPORT_LOCATION}}/${timestamp}"
+          aws s3 cp $GITHUB_WORKSPACE/allure-report/ "${s3_location}" --recursive
 
       - name: Get the public URL of S3 Bucket for ALLURE Report
         run: echo "${{vars.ALLURE_REPORT_URL}}"
