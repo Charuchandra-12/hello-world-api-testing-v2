@@ -3,7 +3,10 @@ name: Hello World API Testing
 on:
   push:
     branches: ["main"]
-
+env:
+  AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+  AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+  REPORT_ID: "${{github.run_id}}"
 jobs:
   test:
     runs-on: ubuntu-latest
@@ -52,20 +55,12 @@ jobs:
       - name: Generate Allure Reports
         run: npx allure generate $GITHUB_WORKSPACE/allure-results --clean
 
-      # - name: Upload Allure results to S3
-      #   run: |
-      # aws s3 cp $GITHUB_WORKSPACE/allure-report/ ${{vars.ALLURE_REPORT_LOCATION}} --recursive
-
       - name: Upload Allure results to S3
         run: |
-          # Use a timestamp or another unique identifier to create a separate directory
-          timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
-          s3_location="${{vars.ALLURE_REPORT_LOCATION}}/${timestamp}"
-          aws s3 cp $GITHUB_WORKSPACE/allure-report/ "${s3_location}" --recursive
-           aws s3 cp $GITHUB_WORKSPACE/allure-report/ "${{vars.ALLURE_REPORT_LOCATION}}/latest" --recursive
+          aws s3 cp $GITHUB_WORKSPACE/allure-report/ s3://hello-world-api-reports/allure-report/report_${{ env.REPORT_ID }}/ --recursive
 
       - name: Get the public URL of S3 Bucket for ALLURE Report
-        run: echo "${{vars.ALLURE_REPORT_URL}}"
+        run: echo "https://hello-world-api-reports.s3.amazonaws.com/allure-report/report_${{ env.REPORT_ID }}/index.html"
 
       - name: Upload test-results.json to S3 for JSON Reports
         run: |
@@ -73,3 +68,7 @@ jobs:
 
       - name: Get the public URL of S3 Bucket for JSON Reports
         run: echo "${{vars.REPORTS_URL}}"
+
+        # report url:- https://hello-world-api-reports.s3.amazonaws.com/allure-report/index.html
+
+        # location url:- s3://hello-world-api-reports/allure-report
