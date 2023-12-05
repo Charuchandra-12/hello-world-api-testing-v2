@@ -59,7 +59,7 @@ jobs:
       - name: Upload Allure results to S3
         run: |
           # Use a timestamp or another unique identifier to create a separate directory
-          timestamp=$(date +"%Y%m%d%H%M%S")
+          timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           s3_location="${{vars.ALLURE_REPORT_LOCATION}}/${timestamp}"
           aws s3 cp $GITHUB_WORKSPACE/allure-report/ "${s3_location}" --recursive
 
