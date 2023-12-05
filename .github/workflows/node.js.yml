@@ -68,7 +68,3 @@ jobs:
 
       - name: Get the public URL of S3 Bucket for JSON Reports
         run: echo "${{vars.REPORTS_URL}}"
-
-        # report url:- https://hello-world-api-reports.s3.amazonaws.com/allure-report/index.html
-
-        # location url:- s3://hello-world-api-reports/allure-report
