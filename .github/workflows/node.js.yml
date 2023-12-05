@@ -62,6 +62,7 @@ jobs:
           timestamp=$(date -u +"%Y-%m-%dT%H:%M:%SZ")
           s3_location="${{vars.ALLURE_REPORT_LOCATION}}/${timestamp}"
           aws s3 cp $GITHUB_WORKSPACE/allure-report/ "${s3_location}" --recursive
+           aws s3 cp $GITHUB_WORKSPACE/allure-report/ "${{vars.ALLURE_REPORT_LOCATION}}/latest" --recursive
 
       - name: Get the public URL of S3 Bucket for ALLURE Report
         run: echo "${{vars.ALLURE_REPORT_URL}}"
